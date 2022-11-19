@@ -17,8 +17,8 @@
       ansible.builtin.assert:
         that:
           - __CONTROLLER_CLUSTER_ID == controller_inventory_site_is_active
-        fail_msg: "Active Site is not {{ controller_inventory_site_is_active }}"
-        success_msg: "'__CONTROLLER_CLUSTER_ID' is active Site"
+        fail_msg: "Active Site is not {{ __CONTROLLER_CLUSTER_ID }}"
+        success_msg: "'controller_inventory_site_is_active' is active Site"
 
     - name: Hello World!
       ansible.builtin.shell: echo "Hi! Controller is working!"
