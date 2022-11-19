@@ -3,12 +3,33 @@
   connection: local
   tasks:
 
-  - name: Hello World!
-    shell: echo "Hi! Controller is working!"
+    - name: "Set __CONTROLLER_CLUSTER_ID variable"
+      ansible.builtin.set_fact:
+        __CONTROLLER_CLUSTER_ID: "{{ lookup('ansible.builtin.env', 'CONTROLLER_CLUSTER_ID') }}"
 
-  - pause:
-      minutes: 5
+    - name: "Check if I'm executing from the Controller Active Site"
+      ansible.builtin.debug:
+        msg:
+          - "{{ __CONTROLLER_CLUSTER_ID }}"
+          - "{{ lookup('ansible.builtin.env', 'CONTROLLER_CLUSTER_ID') }}"
 
-  - debug: msg="{{ '%02d' | format(item) }}"
-    loop: "{{ range(1, 6)|list + range(11, 32)|list }}"
+    - name: "Check if I'm executing from the Controller Active Site"
+      ansible.builtin.assert:
+        that:
+          - __CONTROLLER_CLUSTER_ID == controller_inventory_site_is_active
+        fail_msg: "Active Site is not {{ controller_inventory_site_is_active }}"
+        success_msg: "'__CONTROLLER_CLUSTER_ID' is active Site"
+
+    - name: Hello World!
+      ansible.builtin.shell: echo "Hi! Controller is working!"
+
+    - name: "Pause Task for 1 minute"
+      ansible.builtin.pause:
+        minutes: 1
+
+    - name: "Debug test"
+      ansible.builtin.debug:
+        msg:
+          - "{{ '%02d' | format(item) }}"
+      loop: "{{ range(1, 6)|list + range(11, 32)|list }}"
 ...
