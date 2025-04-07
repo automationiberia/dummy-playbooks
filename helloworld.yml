@@ -6,6 +6,10 @@
   - name: Hello World!
     shell: echo "Hi! Controller is working!"
 
+  - name: Show the current custom fact value
+    ansible.builtin.debug:
+      var: my_custom_fact
+
   - name: Set cacheable fact
     ansible.builtin.set_fact:
       cacheable: yes
