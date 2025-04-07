@@ -8,7 +8,7 @@
 
   - name: Set cacheable fact
     ansible.builtin.set_fact:
-      cacheable: true
+      cacheable: yes
       my_custom_fact: "My custom fact value"
 
   - pause:
