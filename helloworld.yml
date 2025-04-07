@@ -6,8 +6,13 @@
   - name: Hello World!
     shell: echo "Hi! Controller is working!"
 
+  - name: Set cacheable fact
+    ansible.builtin.set_fact:
+      cacheable: true
+      my_custom_fact: "My custom fact value"
+
   - pause:
-      minutes: 5
+      seconds: 5
 
   - debug: msg="{{ '%02d' | format(item) }}"
     loop: "{{ range(1, 6)|list + range(11, 32)|list }}"
